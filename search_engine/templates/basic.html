@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Search App{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-columns {
+            column-count: 5;
+            column-gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) {
+            .card-columns {
+                column-count: 1;
+            }
+        }
+
+        .card {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+
+        .card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-title, .card-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

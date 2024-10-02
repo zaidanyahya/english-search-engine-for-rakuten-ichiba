@@ -1,0 +1,29 @@
+{% extends 'basic.html' %}
+
+{% block title %}Item Detail{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">{{ item.itemName }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for image in item.mediumImageUrls %}
+                                <div class="col-md-4 mb-3">
+                                    <img src="{{ image.imageUrl }}" class="img-fluid" alt="..." style="height: 200px; object-fit: cover;">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <p><strong>Price:</strong> {{ item.itemPrice }} JPY</p>
+                        <p><strong>Description:</strong> {{ item.itemDescription }}</p>
+                        <a href="{{ item.itemUrl }}" target="_blank" class="btn btn-primary">Visit Item Page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
