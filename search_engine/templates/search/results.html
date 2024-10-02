@@ -14,6 +14,7 @@
                             <div class="card-body">
                                 <h5 class="card-title" title="{{ item.itemName }}">{{ item.itemName|truncatechars:20 }}</h5>
                                 <p class="card-text" title="{{ item.itemPrice }} JPY">{{ item.itemPrice }} JPY</p>
+                                <p class="card-text" title="{{ item.reviewCount }} JPY">{{ item.reviewCount }} reviewCount</p>
                                 <a href="{% url 'item_detail' item_code=item.itemCode %}" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
