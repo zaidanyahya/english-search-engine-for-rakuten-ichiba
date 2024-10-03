@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Search App{% endblock %}</title>
+    <title>{% block title %}Wise English Search App{% endblock %}</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .navbar-nav .navbar-brand {
+            font-weight: bold;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            background-color: transparent;
+        }
         .card-columns {
             column-count: 5;
             column-gap: 1.5rem;
@@ -36,6 +44,18 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand navbar-light bg-light rounded">
+        <div class="collapse navbar-collapse justify-content-center">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link navbar-brand" href="#">
+                <span class="text-danger">Wise</span>, English Search for 
+                <span class="text-danger">Rakuten</span> Ichiba
+            </a>
+            </li>
+          </ul>
+        </div>
+    </nav>
     <div class="container">
     <h1 align="center">Wise English search engine for Rakuten Ichiba</h1>
         {% block content %}
