@@ -2,6 +2,7 @@ import time
 import urllib.parse
 from functools import lru_cache
 from translator.translator import translate, Lang
+from relevanceComputor.relevance import caculate_by_relevance
 
 import requests
 
@@ -87,7 +88,6 @@ def get_item_from_rakuten_api(item_code):
     return send_request_to_rakuten_ichiba_api(url)[0]
 
 
-def calculate_similarity(items):
-    for item in items:
-        item['similarity'] = 0.0
-    return items
+def calculate_similarity(keys, items):
+    keys = translate(keys, Lang.EN, Lang.JA)[0]
+    return caculate_by_relevance(keys, items)

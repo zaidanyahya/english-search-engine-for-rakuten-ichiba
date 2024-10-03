@@ -22,7 +22,7 @@ def search_results(request):
     if not has_next_page and page > 1:
         return redirect(reverse('search_results') + f'?q={query}&page=1&message=no_more_items')
 
-    items = calculate_similarity(items)
+    items = calculate_similarity(query, items)
 
     context = {
         'items': items,
