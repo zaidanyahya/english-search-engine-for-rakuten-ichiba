@@ -7,15 +7,29 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center">Search Results for "{{ query }}"</h1>
-                <div class="card-columns">
+                <div class="text-center mb-3">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" class="form-control mx-auto w-auto" style="display: inline-block; width: auto;">
+                        <option value="reviewCount">Review Count</option>
+                        <option value="similarity">Similarity</option>
+                    </select>
+                </div>
+                <div class="row" id="item-list">
                     {% for item in items %}
-                        <div class="card mb-4 shadow-sm" style="height: 400px;" title="Item Name: {{ item.itemName }}">
-                            <img src="{{ item.mediumImageUrls.0.imageUrl }}" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title" title="{{ item.itemName }}">{{ item.itemName|truncatechars:20 }}</h5>
-                                <p class="card-text" title="{{ item.itemPrice }} JPY">{{ item.itemPrice }} JPY</p>
-                                <p class="card-text" title="{{ item.reviewCount }} JPY">{{ item.reviewCount }} reviewCount</p>
-                                <a href="{% url 'item_detail' item_code=item.itemCode %}" class="btn btn-primary">View Details</a>
+                        <div class="col-md-2 col-sm-4 col-6 mb-4">
+                            <div class="card shadow-sm h-100"
+                                 data-item-code="{{ item.itemCode }}"
+                                 data-review-count="{{ item.reviewCount }}"
+                                 data-similarity="{{ item.similarity }}"
+                                 title="Item Name: {{ item.itemName }}">
+                                <img src="{{ item.mediumImageUrls.0.imageUrl }}" class="card-img-top" alt="..." style="height: 150px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title" title="{{ item.itemName }}">{{ item.itemName|truncatechars:20 }}</h5>
+                                    <p class="card-text" title="{{ item.itemPrice }} JPY">{{ item.itemPrice }} JPY</p>
+                                    <p class="card-text" title="{{ item.reviewCount }} reviews">{{ item.reviewCount }} reviews</p>
+                                    <p class="card-text" title="{{ item.similarity }} similarity">{{ item.similarity }} similarity</p>
+                                    <a href="{% url 'item_detail' item_code=item.itemCode %}" class="btn btn-primary">View Details</a>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -66,7 +80,39 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            var itemList = document.getElementById('item-list');
+            var items = Array.from(itemList.children);
+            var sortSelect = document.getElementById('sort-select');
+
+            function sortItems(sortBy) {
+                items.sort(function (a, b) {
+                    var aVal, bVal;
+                    if (sortBy === 'reviewCount') {
+                        aVal = parseInt(a.querySelector('.card').getAttribute('data-review-count'));
+                        bVal = parseInt(b.querySelector('.card').getAttribute('data-review-count'));
+                    } else if (sortBy === 'similarity') {
+                        aVal = parseFloat(a.querySelector('.card').getAttribute('data-similarity'));
+                        bVal = parseFloat(b.querySelector('.card').getAttribute('data-similarity'));
+                    }
+
+                    return bVal - aVal;
+                });
+
+                // Reinsert sorted elements
+                items.forEach(function (item) {
+                    itemList.appendChild(item);
+                });
+            }
+
+            // Initial sorting based on the default value of the select element
+            sortItems(sortSelect.value);
+
+            // Listen for changes on the select element to re-sort items
+            sortSelect.addEventListener('change', function () {
+                sortItems(this.value);
+            });
+
             var noMoreItems = "{{ no_more_items }}";
             if (noMoreItems === "True") {
                 $('#no-more-items-alert').modal('show');
