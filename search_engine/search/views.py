@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
-from .utils import get_items_from_rakuten_api, get_item_from_rakuten_api
+from .utils import get_items_from_rakuten_api, get_item_from_rakuten_api, calculate_similarity
 
 
 def search(request):
@@ -21,6 +21,8 @@ def search_results(request):
     # no more items so redirect to first page
     if not has_next_page and page > 1:
         return redirect(reverse('search_results') + f'?q={query}&page=1&message=no_more_items')
+
+    items = calculate_similarity(items)
 
     context = {
         'items': items,

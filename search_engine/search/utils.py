@@ -1,7 +1,7 @@
 import time
 import urllib.parse
 from functools import lru_cache
-from translator.translator import translate,Lang
+from translator.translator import translate, Lang
 
 import requests
 
@@ -12,7 +12,7 @@ base_url = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601'
 application_id = 'your_application_id'
 
 # item info we needed
-item_info_keys = ['itemName', 'itemPrice', 'itemUrl', 'mediumImageUrls', 'itemCode', 'reviewCount']
+item_info_keys = ['itemName', 'itemPrice', 'itemUrl', 'mediumImageUrls', 'itemCode', 'reviewCount', 'catchcopy']
 
 # retry counts
 retry_counts = 5
@@ -85,3 +85,9 @@ def get_item_from_rakuten_api(item_code):
     item_code = urllib.parse.quote(item_code, encoding='utf-8')
     url = f'{base_url}?applicationId={application_id}&itemCode={item_code}'
     return send_request_to_rakuten_ichiba_api(url)[0]
+
+
+def calculate_similarity(items):
+    for item in items:
+        item['similarity'] = 0.0
+    return items
