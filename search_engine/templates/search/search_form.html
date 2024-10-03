@@ -1,0 +1,8 @@
+<form method="get" action="{% url 'search_results' %}">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search for items" name="q" {% if query %}value="{{ query }}"{% endif %}>
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
